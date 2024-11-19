@@ -1,0 +1,45 @@
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column; /* Empilha os cards em telas menores */
+        align-items: center;
+    }
+
+    .card {
+        width: 90%; /* Aumenta a largura dos cartões para 90% em telas pequenas */
+        margin: 10px 0;
+    }
+
+    header {
+        flex-direction: column; /* Alinha o conteúdo do cabeçalho em colunas */
+        text-align: center;
+        padding: 15px;
+    }
+
+    .menu-icon {
+        font-size: 30px; /* Aumenta o ícone do menu */
+        margin-top: 10px;
+    }
+
+    .sidebar {
+        width: 200px; /* Reduz a largura da sidebar */
+    }
+
+    footer {
+        padding: 10px; /* Ajusta o rodapé para telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .card h2 {
+        font-size: 16px; /* Diminui o tamanho do título nos cartões */
+    }
+
+    .card p {
+        font-size: 14px; /* Diminui o tamanho da descrição nos cartões */
+    }
+
+    .whatsapp-button {
+        padding: 8px 16px; /* Ajusta o tamanho do botão do WhatsApp */
+        font-size: 14px; /* Diminui a fonte do botão */
+    }
+}
