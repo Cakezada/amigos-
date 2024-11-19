@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Amigos"</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+        h1 {
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .menu-icon {
+            cursor: pointer;
+            font-size: 24px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Escondido inicialmente */
+            width: 250px;
+            height: 100%;
+            background-color: #444;
+            color: white;
+            transition: left 0.3s;
+            padding: 20px;
+        }
+        .sidebar.active {
+            left: 0; /* Mostra a barra lateral */
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 10px 0;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .card {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 300px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+        }
+        .card img {
+            width: 100%;
+            height: 200px; /* Altura fixa para os cards */
+            object-fit: cover; /* Mantém a proporção da imagem */
+        }
+        .card h2 {
+            margin: 10px;
+            font-size: 20px;
+        }
+        .card p {
+            margin: 10px;
+            color: #555;
+        }
+        /* Estilo do modal */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro */
+            padding: 20px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto; /* Ajusta a altura automaticamente */
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .whatsapp-button {
+            background-color: #25D366; /* Cor do WhatsApp */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        footer {
+            background-color: #333; /* Cor de fundo do rodapé */
+            color: white; /* Cor do texto */
+            text-align: center; /* Centraliza o texto */
+            padding: 15px 0; /* Espaçamento interno */
+            position: relative; /* Para posicionar o rodapé */
+            bottom: 0; /* Fixa o rodapé na parte inferior */
+            width: 100%; /* Faz o rodapé ocupar toda a largura da página */
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>"Amigos"</h1>
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+</header>
+<div class="sidebar" id="sidebar">
+    <h2>Opções</h2>
+    <a href="#">Opção 1</a>
+    <a href="#">Opção 2</a>
+    <a href="#">Opção 3</a>
+    <a href="#">Opção 4</a>
+</div>
+<div class="card-container">
+    <div class="card" onclick="openModal('Braga', './imgs/braga.jpg', 'Murilo Braga, 16 years, Solteiro, Bi-sexual', '55999999999')">
+        <img src="./imgs/braga.jpg" alt="Imagem 1">
+        <h2>Braga</h2>
+        <p>Murilo Braga pequeno mas gigante</p>
+    </div>
+    <div class="card" onclick="openModal('Castro', './imgs/castro2.jpg', 'Guilherme Castro, 17 years, Putifero, Bi-sexual', '55988888888')">
+        <img src="./imgs/castro2.jpg" alt="Imagem 2">
+        <h2>Castro</h2>
+        <p>Guilherme Castro boa noite!</p>
+    </div>
+    <div class="card" onclick="openModal('Felps', './imgs/felps2.jpg', 'Felipe Nunes, 16 years, Solteiro, Bi-sexual', '55977777777')">
+        <img src="./imgs/felps2.jpg" alt="Imagem 3">
+        <h2>Felps</h2>
+        <p>Felipe Nunes e seu melhor amigo Fogaça</p>
+    </div>
+    <div class="card" onclick="openModal('Klarosk', './imgs/klarosk.jpg', 'Pedro Henrique Klarosk, 16 years, Compromissado, Gay', '55966666666')">
+        <img src="./imgs/klarosk.jpg" alt="Imagem 4">
+        <h2>Klarosk</h2>
+        <p>Pedro Henrique Klarosk....</p>
+    </div>
+</div>
+<div class="card-container">
+    <div class="card" onclick="openModal('Risada', './imgs/risada2.png', 'Gustavo Henrique, 16 years, Compromissado, Hetero', '55955645555')">
+        <img src="./imgs/risada2.png" alt="Imagem 1">
+        <h2>Risada</h2>
+        <p>Gustavo Henrique vulgo risadinha</p>
+    </div>
+    <div class="card" onclick="openModal('Caique', './imgs/caique.jpg', 'Caique, 16 years, Solteiro até demais, Hetero', '55944964444')">
+        <img src="./imgs/caique.jpg" alt="Imagem 2">
+        <h2>Caique</h2>
+        <p>Caique vai corinthians e ferrari nois</p>
+    </div>
+    <div class="card" onclick="openModal('Vinicião', './imgs/viniciao.jpg', 'Vinicius Pereira, 16 years, Solteiro, Hetero', '55933328333')">
+        <img src="./imgs/viniciao.jpg" alt="Imagem 3">
+        <h2>Vinicião</h2>
+        <p>Vinicius Pereira o bignicius</p>
+    </div>
+    <div class="card" onclick="openModal('ZÉ', './imgs/joao.jpg', 'João Pedro, 16 years, Solteiro, Bi-sexual', '55921422222')">
+        <img src="./imgs/joao.jpg" alt="Imagem 4">
+        <h2>ZÉ</h2>
+        <p>João Pedro ZÉEEEEEEEEE</p>
+    </div>
+</div>
+<div class="card-container">
+    <div class="card" onclick="openModal('Miguel', './imgs/miguel.jpg', 'Miguel, 16 years, Solteiro, Hetero', '559576555555')">
+        <img src="./imgs/miguel.jpg" alt="Imagem 1">
+        <h2>Miguel</h2>
+        <p>É o miguas esquece</p>
+    </div>
+    <div class="card" onclick="openModal('Campos', './imgs/campos.jpg', 'Pedro Campos, 16 anos, Com Ficante, Hetero', '55944443144')">
+        <img src="./imgs/campos.jpg" alt="Imagem 2">
+        <h2>Campos</h2>
+        <p>Pedro Campos vulgo Pelão campinas</p>
+    </div>
+    <div class="card" onclick="openModal('Samuel', './imgs/samuel.jpg', 'Samuel Pereira, 16 years, Solteiro, Bi-sexual, 130kg', '559333392333')">
+        <img src="./imgs/samuel.jpg" alt="Imagem 3">
+        <h2>Samuel</h2>
+        <p>Samuel Pereira BIG BIG</p>
+    </div>
+    <div class="card" onclick="openModal('Paulino', './imgs/paulino.jpg', 'Vinicius Paulino, bora fort zé!', '55922782222')">
+        <img src="./imgs/paulino.jpg" alt="Imagem 4">
+        <h2>Paulino</h2>
+        <p>Vinicius Paulino, bora fort zé!</p>
+    </div>
+    <div class="card-container">
+        <div class="card" onclick="openModal('Bolino', './imgs/bolino.jpg', 'Pedro Bolino, 16 years, Solteiro, Hetero, Main Cypher', '559576555555')">
+            <img src="./imgs/bolino.jpg" alt="Imagem 1">
+            <h2>Bolino</h2>
+            <p>É o bolinho valorant esquece</p>
+        </div>
+        <div class="card" onclick="openModal('Cauã', './imgs/caua.png', 'Cau, 16 anos, Solteiro, Hetero', '55944443144')">
+            <img src="./imgs/caua.png" alt="Imagem 2">
+            <h2>Cauã</h2>
+            <p>Cauãzada bicho pau</p>
+        </div>
+        <div class="card" onclick="openModal('Enzo', './imgs/enzo.jpg', 'Enzo, 16 years, Solteiro, Hetero', '559333392333')">
+            <img src="./imgs/enzo.jpg" alt="Imagem 3">
+            <h2>Enzo</h2>
+            <p>Black zigzada fortnite</p>
+        </div>
+        <div class="card" onclick="openModal('Seiji', './imgs/seiji.png', 'Otávio Seiji, 16 years, Compromissado, Bi-sexual', '55922782222')">
+            <img src="./imgs/seiji.png" alt="Imagem 4">
+            <h2>Seiji</h2>
+            <p>Otávio Seiji genshin impact nerd</p>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" src="" alt="Imagem">
+        <h2 id="modalName"></h2>
+        <p id="modalInfo"></p>
+        <a id="whatsappLink" href="#" class="whatsapp-button" target="_blank">Enviar WhatsApp</a>
+    </div>
+</div>
+
+<!-- Rodapé -->
+<footer>
+    <p>Site em desenvolvimento, entre em contato para pedir atualizações</p>
+    <p>&copy; 2024. Todos os direitos reservados.</p>
+    <p>Contato: caique.canavan.1bmangal@gmail.com</p>
+    <p><a href="politica-de-privacidade.html" style="color: white; text-decoration: underline;">Política de Privacidade</a></p>
+</footer>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('active');
+    }
+    function openModal(name, image, info, whatsappNumber) {
+        document.getElementById('modalName').innerText = name;
+        document.getElementById('modalImage').src = image;
+        document.getElementById('modalInfo').innerText = info;
+        document.getElementById('whatsappLink').href = `https://wa.me/${whatsappNumber}`;
+        document.getElementById('myModal').style.display = "block";
+    }
+    function closeModal() {
+        document.getElementById('myModal').style.display = "none";
+    }
+    // Fecha o modal se o usuário clicar fora da área do modal
+    window.onclick = function(event) {
+        const modal = document.getElementById('myModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+</body>
+</html>
